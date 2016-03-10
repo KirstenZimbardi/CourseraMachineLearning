@@ -26,6 +26,7 @@ clear ; close all; clc
 data = load('ex2data1.txt');
 X = data(:, [1, 2]); y = data(:, 3);
 
+
 %% ==================== Part 1: Plotting ====================
 %  We start the exercise by first plotting the data to understand the 
 %  the problem we are working with.
@@ -33,7 +34,10 @@ X = data(:, [1, 2]); y = data(:, 3);
 fprintf(['Plotting data with + indicating (y = 1) examples and o ' ...
          'indicating (y = 0) examples.\n']);
 
-plotData(X, y);
+% plotData(X, y);
+myplot(X, y);
+
+%% 
 
 % Put some labels 
 hold on;
@@ -45,8 +49,8 @@ ylabel('Exam 2 score')
 legend('Admitted', 'Not admitted')
 hold off;
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
 %% ============ Part 2: Compute Cost and Gradient ============
