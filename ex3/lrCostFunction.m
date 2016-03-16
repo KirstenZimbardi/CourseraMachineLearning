@@ -63,7 +63,7 @@ grad = zeros(size(theta))
 temp = theta; 
 temp(1) = 0;   
 grad = 1/m * (Error + ((lambda/m) * temp))
-grad = grad + ((lambda/m) * temp)
+%grad = grad + ((lambda/m) * temp)
 
 
 
