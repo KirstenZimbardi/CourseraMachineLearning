@@ -5,6 +5,10 @@ clear ; close all; clc
 
 load('ex3data1.mat'); % training data stored in arrays X, y
 
+%% adding x0 to X 
+
+x = [zeros(length(X) X];
+
 
 %% submission data
 
@@ -30,67 +34,15 @@ num_labels = 10;          % 10 labels, from 1 to 10
 
 lambda = 0.1;
 
-theta = 0,n
+theta = zeros(n,1);
 
 % You need to return the following variables correctly 
-J = 0;
-grad = zeros(size(theta));
+%J = 0;
+%grad = zeros(size(theta));
 
-%% my function code
+%% regularised cost function
 
-% g
-z = X * theta;
-h = sigmoid(z);
-
-%% Cost
-
-E = (-y .* log(h)) - ((1-y) .* log(1-h));
-
-%J = 1/m * sum(E)
-
-reg = sum(theta(2:n) .* theta(2:n));
-
-J = 1/m * sum(E) + (lambda/(2*m) * reg)
-
-%% gradient
-Es = h-y
-Egrad = repmat(Es,1,n)
-%Egrad(:,1) = 0
-
-Error = Egrad .* X
-
-%% 
-%grad = 1/m * (X' * (h - y));
-
-grad = zeros(size(theta))
-
-%grad = (1/m * sum(Error)) + ((lambda/m) * theta)
-
-error = (1/m * sum(Error))'
-temp = theta; 
-temp(1) = 0;   
-reg = ((lambda/m) * temp)
-
-grad = error + reg
-
-
-%% 
-
-temp = theta; 
-temp(1) = 0;   
-
-grad = 1/m * (Error + ((lambda/m) * temp))
-
-grad = grad + ((lambda/m) * temp)
-
-
-%% 
-
-for j = 1:n
-    Error(j,:) = Egrad .* X(:,j);
-    grad(j,:) = 1/m * sum(Error(j,:));
-end
-%% 
+[J, grad] = lrCostFunction(theta, X, y, lambda)
 
 
 

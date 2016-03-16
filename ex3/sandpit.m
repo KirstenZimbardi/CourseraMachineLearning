@@ -5,6 +5,11 @@ clear ; close all; clc
 
 load('ex3data1.mat'); % training data stored in arrays X, y
 
+%% adding x0 to X 
+
+[m, n] = size(X);
+X = [ones(m,1) X];
+
 
 %% submission data
 
