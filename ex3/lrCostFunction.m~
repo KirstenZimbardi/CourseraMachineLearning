@@ -67,9 +67,9 @@ grad = zeros(size(theta));
 error = (1/m * sum(Error))';
 temp = theta; 
 temp(1) = 0;   
-reg = ((lambda/m) * temp);
+reg = ((lambda/m) * temp)
 
-grad = error + reg;
+grad = error + reg
 
 
 %% 
