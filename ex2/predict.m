@@ -16,7 +16,9 @@ p = zeros(m, 1);
 %
 
 
+prob = sigmoid(X * theta);
 
+p = ge(prob,0.5);
 
 
 
