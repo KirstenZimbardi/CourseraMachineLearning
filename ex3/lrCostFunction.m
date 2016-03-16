@@ -51,20 +51,28 @@ reg = sum(theta(2:n) .* theta(2:n));
 J = 1/m * sum(E) + (lambda/(2*m) * reg)
 
 %% gradient
+Es = h-y
+Egrad = repmat(Es,1,n)
+%Egrad(:,1) = 0
 
-Egrad = h - y;
+Error = Egrad .* X
 
-Error = X' * Egrad
 %% 
 %grad = 1/m * (X' * (h - y));
 
 grad = zeros(size(theta))
-%grad = 1/m * (Error + ((lambda/m) * theta))
+
+%grad = (1/m * sum(Error)) + ((lambda/m) * theta)
+
+error = (1/m * sum(Error))'
 temp = theta; 
 temp(1) = 0;   
-grad = 1/m * (Error + ((lambda/m) * temp))
-%grad = grad + ((lambda/m) * temp)
+reg = ((lambda/m) * temp)
 
+grad = error + reg
+
+
+%% 
 
 
 
