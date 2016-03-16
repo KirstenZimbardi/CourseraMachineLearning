@@ -18,23 +18,20 @@ clear ; close all; clc
 
 %% useful stuff
 
-%[m, n] = size(X);
-%x = [ones(m,1) X];
-x = X;
-[m, n] = size(x);
-itheta = zeros(n,1);
-%xt = X';
+[m, n] = size(X);
 
-%% submit function
-
+%submission code
 %lrCostFunction([0.25 0.5 -0.5]', X, y, 0.1);
-
-itheta = [0.25 0.5 -0.5]'
+theta = [0.25 0.5 -0.5]'
 lambda = 0.1
+% You need to return the following variables correctly 
+J = 0;
+grad = zeros(size(theta));
 
+%% my function code
 
-%% g function
-z = x * itheta;
+% g
+z = X * theta;
 h = sigmoid(z);
 
 %% Cost
@@ -43,14 +40,35 @@ E = (-y .* log(h)) - ((1-y) .* log(1-h));
 
 %J = 1/m * sum(E)
 
-reg = sum(itheta(2:n) .* itheta(2:n));
+reg = sum(theta(2:n) .* theta(2:n));
 
 J = 1/m * sum(E) + (lambda/(2*m) * reg)
 
 %% gradient
 
+Egrad = h - y;
 
+Error = X' * Egrad
+%% 
 %grad = 1/m * (X' * (h - y));
-grad = zeros(size(itheta));
-grad(2:n,:) = grad(2:n,:) + ((lambda/m) * itheta(2:n));
+
+grad = zeros(size(theta))
+%grad = 1/m * (Error + ((lambda/m) * theta))
+temp = theta; 
+temp(1) = 0;   
+grad = 1/m * (Error + ((lambda/m) * temp))
+grad = grad + ((lambda/m) * temp)
+
+
+%% 
+
+for j = 1:n
+    Error(j,:) = Egrad .* X(:,j);
+    grad(j,:) = 1/m * sum(Error(j,:));
+end
+%% 
+
+
+
+
 
