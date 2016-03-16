@@ -18,20 +18,11 @@ clear ; close all; clc
 
 %% useful stuff
 
-%[m, n] = size(X);
-%x = [ones(m,1) X];
-x = X;
-[m, n] = size(x);
+[m, n] = size(X);
+x = [ones(m,1) X];
+
 itheta = zeros(n,1);
 %xt = X';
-
-%% submit function
-
-%lrCostFunction([0.25 0.5 -0.5]', X, y, 0.1);
-
-itheta = [0.25 0.5 -0.5]'
-lambda = 0.1
-
 
 %% g function
 z = x * itheta;
