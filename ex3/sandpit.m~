@@ -7,7 +7,8 @@ load('ex3data1.mat'); % training data stored in arrays X, y
 
 %% adding x0 to X 
 
-x = [zeros(length(X) X];
+[m, n] = size(X);
+X = [ones(m,1) X];
 
 
 %% submission data
@@ -43,6 +44,41 @@ theta = zeros(n,1);
 %% regularised cost function
 
 [J, grad] = lrCostFunction(theta, X, y, lambda)
+
+
+%% one vs all function building
+
+% You need to return the following variables correctly 
+all_theta = zeros(num_labels, n);
+
+%theta(:)
+
+for c = 1:num_labels
+    k(:,c) = y == c;
+end
+
+%% 
+
+% optimise theta for each class k 1-10 using fmincg
+
+for c = 1:num_labels
+    [X, fX, i] = fmincg(f, X, options, P1, P2, P3, P4, P5)
+end
+%% 
+
+%     % Set Initial theta
+initial_theta = zeros(n, 1);
+%     
+%     % Set options for fminunc
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+% 
+%     % Run fmincg to obtain the optimal theta
+%     % This function will return theta and the cost 
+for c = 1:num_labels
+    [thetaf] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+end
+
+%% next
 
 
 
