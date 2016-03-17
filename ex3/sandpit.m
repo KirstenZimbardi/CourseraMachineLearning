@@ -78,9 +78,12 @@ for c = 1:num_labels
     [thetaf] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
 end
 
-%% next
+%% submission check
+
+[submit_theta] = oneVsAll(Xm, ym, 4, 0.1)
 
 
+%% 
 
 
 
