@@ -59,30 +59,7 @@ theta = zeros(n,1);
 
 % p = predictOneVsAll(all_theta, X)
 
-%m = size(X, 1);
-num_labels = size(all_theta, 1);
-
-% You need to return the following variables correctly 
-p = zeros(size(X, 1), 1);
-
-% Add ones to the X data matrix
-X = [ones(m, 1) X];
-[m, n] = size(X); 
+pred = predictOneVsAll(all_theta, X);
 
 %% 
-
-z = X * all_theta';
-h = sigmoid(z);
-%% 
-
-[M, I] = max(h, [], 2);
-
-%% 
-
-accuracy = I == y
-test = sum(I == y)/m
-
-%% 
-
-sum(accuracy)
 

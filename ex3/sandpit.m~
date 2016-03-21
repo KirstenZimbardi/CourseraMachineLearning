@@ -73,10 +73,15 @@ X = [ones(m, 1) X];
 
 z = X * all_theta';
 h = sigmoid(z);
+
+[M, p] = max(h, [], 2);
+
 %% 
 
-[M, I] = max(h, [], 2);
+accuracy = I == y
+test = sum(I == y)/m
 
 %% 
 
-test = 
+sum(accuracy)
+
