@@ -28,7 +28,7 @@ X = [ones(m,1) X];
 
 %% useful stuff
 
-[m, n] = size(X);
+[m, n] = size(X); 
 
 input_layer_size  = 400;  % 20x20 Input Images of Digits
 num_labels = 10;          % 10 labels, from 1 to 10   
@@ -48,39 +48,7 @@ theta = zeros(n,1);
 
 %% one vs all function building
 
-% You need to return the following variables correctly 
-all_theta = zeros(num_labels, n);
-
-%theta(:)
-
-for c = 1:num_labels
-    k(:,c) = y == c;
-end
-
-%% 
-
-% optimise theta for each class k 1-10 using fmincg
-
-for c = 1:num_labels
-    [X, fX, i] = fmincg(f, X, options, P1, P2, P3, P4, P5)
-end
-%% 
-
-%     % Set Initial theta
-initial_theta = zeros(n, 1);
-%     
-%     % Set options for fminunc
-options = optimset('GradObj', 'on', 'MaxIter', 50);
-% 
-%     % Run fmincg to obtain the optimal theta
-%     % This function will return theta and the cost 
-for c = 1:num_labels
-    [thetaf] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
-end
-
-%% submission check
-
-[submit_theta] = oneVsAll(Xm, ym, 4, 0.1)
+[all_theta] = oneVsAll(X, y, num_labels, lambda)
 
 
 %% 
