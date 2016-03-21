@@ -61,5 +61,52 @@ theta = zeros(n,1);
 
 pred = predictOneVsAll(all_theta, X);
 
-%% 
+%% Neural networks
+clear ; close all; clc
+%% new dataset 
+% Setup the parameters you will use for this exercise
+input_layer_size  = 400;  % 20x20 Input Images of Digits
+hidden_layer_size = 25;   % 25 hidden units
+num_labels = 10;          % 10 labels, from 1 to 10
+
+%data
+load('ex3data1.mat');
+m = size(X, 1);
+
+% Randomly select 100 data points to display
+sel = randperm(size(X, 1));
+sel = sel(1:100);
+
+%load weights for Theta (1 and 2)
+load('ex3weights.mat');
+
+%% adding x0 to X
+
+[m, n] = size(X);
+X = [ones(m,1) X];
+
+%% set up predict
+
+[m, n] = size(X);
+num_labels = size(Theta2, 1);
+
+% You need to return the following variables correctly 
+p = zeros(size(X, 1), 1);
+
+%% developing predict
+
+a2 = sigmoid(X*Theta1');
+
+a20 = [ones(m,1) a2];
+
+h = sigmoid(a20 * Theta2');
+
+[M, p] = max(h, [], 2);
+
+%% accuracy
+
+accuracy = p == y;
+accuracyP = sum(accuracy)/m
+
+
 
