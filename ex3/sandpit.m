@@ -5,7 +5,9 @@ clear ; close all; clc
 
 load('ex3data1.mat'); % training data stored in arrays X, y
 
-%% adding x0 to X 
+%% adding x0 to X
+% usually don't do this - gets added in during each function so only
+% changes the local X and not the original global X
 
 [m, n] = size(X);
 X = [ones(m,1) X];
@@ -35,7 +37,6 @@ num_labels = 10;          % 10 labels, from 1 to 10
 
 lambda = 0.1;
 
-theta = zeros(n,1);
 
 % You need to return the following variables correctly 
 %J = 0;
@@ -43,15 +44,45 @@ theta = zeros(n,1);
 
 %% regularised cost function
 
+% initialise
+theta = zeros(n,1);
+
 [J, grad] = lrCostFunction(theta, X, y, lambda)
 
 
-%% one vs all function building
+%% one vs all function 
 
 [all_theta] = oneVsAll(X, y, num_labels, lambda)
 
 
+%% predict using oneVsAll function
+
+% p = predictOneVsAll(all_theta, X)
+
+%m = size(X, 1);
+num_labels = size(all_theta, 1);
+
+% You need to return the following variables correctly 
+p = zeros(size(X, 1), 1);
+
+% Add ones to the X data matrix
+X = [ones(m, 1) X];
+[m, n] = size(X); 
+
 %% 
 
+z = X * all_theta';
+h = sigmoid(z);
+%% 
 
+[M, I] = max(h, [], 2);
+
+%% 
+
+accuracy = I == y
+test = sum(I == y)/m
+
+%% 
+
+sum(accuracy)
 
