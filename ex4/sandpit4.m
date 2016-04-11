@@ -97,7 +97,15 @@ a2g = a2(:,2:(hidden_layer_size+1));
 
 Theta1_grad = a2g' * X;
 
-%% 
+%% Sigmoid function
+
+z = [-15:-10;10:15;0:5]
+
+
+
+gz = 1.0 ./ (1.0 + exp(-z))
+
+g = gz .* (1 - gz)
 
 
 
