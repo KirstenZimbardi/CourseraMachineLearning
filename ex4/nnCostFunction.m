@@ -97,8 +97,20 @@ Ek = sum(E);
 Em = sum(Ek,2);
 
 %%  * 1/m
-J = (1/m) * Em
+J_unreg = (1/m) * Em
 
+%% adding regularisation
+%Theta1
+
+Theta1_squared = Theta1(:,2:size(Theta1,2)) .* Theta1(:,2:size(Theta1,2));
+Theta1_SS = sum(Theta1_squared);
+Theta1_SS = sum(Theta1_SS,2);
+
+Theta2_squared = Theta2(:,2:size(Theta2,2)) .* Theta2(:,2:size(Theta2,2));
+Theta2_SS = sum(Theta2_squared);
+Theta2_SS = sum(Theta2_SS,2);
+
+J = J_unreg + ((lambda/(2*m)) * (Theta1_SS + Theta2_SS))
 
 
 %% gradient
