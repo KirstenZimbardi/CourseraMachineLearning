@@ -168,8 +168,8 @@ debug_J  = nnCostFunction(nn_params, input_layer_size, ...
 fprintf(['\n\nCost at (fixed) debugging parameters (w/ lambda = 10): %f ' ...
          '\n(this value should be about 0.576051)\n\n'], debug_J);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+%fprintf('Program paused. Press enter to continue.\n');
+%pause;
 
 
 %% =================== Part 8: Training NN ===================

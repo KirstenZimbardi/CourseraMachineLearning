@@ -97,7 +97,7 @@ Ek = sum(E);
 Em = sum(Ek,2);
 
 %%  * 1/m
-J_unreg = (1/m) * Em
+J_unreg = (1/m) * Em;
 
 %% adding regularisation
 %Theta1
@@ -110,7 +110,7 @@ Theta2_squared = Theta2(:,2:end) .* Theta2(:,2:end);
 Theta2_SS = sum(Theta2_squared);
 Theta2_SS = sum(Theta2_SS,2);
 
-J = J_unreg + ((lambda/(2*m)) * (Theta1_SS + Theta2_SS))
+J = J_unreg + ((lambda/(2*m)) * (Theta1_SS + Theta2_SS));
 
 
 %% gradient
