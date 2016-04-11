@@ -2,7 +2,7 @@
 %working out nnCostFx
 
 % Preset from ex4.m - comment out when running effectively            
-lambda = 0;
+lambda = 1;
 
 %fx parameters
 %function [J grad] = nnCostFunction(nn_params, ...
@@ -64,9 +64,19 @@ Ek = sum(E);
 Em = sum(Ek,2);
 
 %%  * 1/m
-J = (1/m) * Em
+J_unreg = (1/m) * Em
+%% adding regularisation
+%Theta1
 
+Theta1_squared = Theta1(:,2:size(Theta1,2)) .* Theta1(:,2:size(Theta1,2));
+Theta1_SS = sum(Theta1_squared);
+Theta1_SS = sum(Theta1_SS,2);
 
+Theta2_squared = Theta2(:,2:size(Theta2,2)) .* Theta2(:,2:size(Theta2,2));
+Theta2_SS = sum(Theta2_squared);
+Theta2_SS = sum(Theta2_SS,2);
+
+J = J_unreg + ((lambda/(2*m)) * (Theta1_SS + Theta2_SS))
 
 %% gradient
 for k = 1:num_labels
@@ -81,11 +91,11 @@ d2 = h .* (1-h);
 % no error for layer 1 since that is the data input
 %% getting Theta1_grad and Theta2_grad based on clued size
 
-T2_grad = d3' * a2;
+Theta2_grad = d3' * a2;
 
-a2g = a2(:,2:hidden_layer_size);
+a2g = a2(:,2:(hidden_layer_size+1));
 
-T1_grad = a2g' * X;
+Theta1_grad = a2g' * X;
 
 %% 
 
