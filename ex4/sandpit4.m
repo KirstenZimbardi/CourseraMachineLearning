@@ -68,6 +68,27 @@ J = (1/m) * Em
 
 
 
+%% gradient
+for k = 1:num_labels
+    c(:,k) = y == k;
+end
+%% error for layer 3
+
+d3 = h - c;
+%% error for layer 2
+
+d2 = h .* (1-h);
+% no error for layer 1 since that is the data input
+%% getting Theta1_grad and Theta2_grad based on clued size
+
+Theta2_grad = d3' * a2;
+
+a2g = a2(:,2:(hidden_layer_size+1));
+
+Theta1_grad = a2g' * X;
+
 %% 
+
+
 
                                    

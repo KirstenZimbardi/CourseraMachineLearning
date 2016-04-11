@@ -24,8 +24,25 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
                  num_labels, (hidden_layer_size + 1));
 
             
+[m, n] = size(X);
+
+% Add ones to the X data matrix
+X = [ones(m, 1) X];
+[m, n] = size(X);
+            
 % Setup some useful variables
-m = size(X, 1);
+%m = size(X, 1);
+
+%% g function
+% layer 1 -> 2
+z = X * Theta1';
+a2 = sigmoid(z);
+
+%% g function
+% layer 2 ->3
+a2 = [ones(m, 1) a2];
+z2 = a2 * Theta2';
+h = sigmoid(z2);
          
 % You need to return the following variables correctly 
 J = 0;
@@ -66,20 +83,42 @@ Theta2_grad = zeros(size(Theta2));
 
 
 
+%% Cost
+
+for k = 1:num_labels
+    c = y == k;
+    E(k,:) = (-c .* log(h(:,k))) - ((1-c) .* log(1-h(:,k)));
+end
+
+%% sum for 1:k classes
+Ek = sum(E);
+
+%% sum for 1:m training examples
+Em = sum(Ek,2);
+
+%%  * 1/m
+J = (1/m) * Em
 
 
 
+%% gradient
+for k = 1:num_labels
+    c(:,k) = y == k;
+end
+%% error for layer 3
 
+d3 = h - c;
+%% error for layer 2
 
+d2 = h .* (1-h);
+% no error for layer 1 since that is the data input
+%% getting Theta1_grad and Theta2_grad based on clued size
 
+Theta2_grad = d3' * a2;
 
+a2g = a2(:,2:(hidden_layer_size+1));
 
-
-
-
-
-
-
+Theta1_grad = a2g' * X;
 
 
 % -------------------------------------------------------------
