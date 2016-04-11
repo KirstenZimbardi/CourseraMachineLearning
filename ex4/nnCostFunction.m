@@ -102,11 +102,11 @@ J_unreg = (1/m) * Em
 %% adding regularisation
 %Theta1
 
-Theta1_squared = Theta1(:,2:size(Theta1,2)) .* Theta1(:,2:size(Theta1,2));
+Theta1_squared = Theta1(:,2:end) .* Theta1(:,2:end);
 Theta1_SS = sum(Theta1_squared);
 Theta1_SS = sum(Theta1_SS,2);
 
-Theta2_squared = Theta2(:,2:size(Theta2,2)) .* Theta2(:,2:size(Theta2,2));
+Theta2_squared = Theta2(:,2:end) .* Theta2(:,2:end);
 Theta2_SS = sum(Theta2_squared);
 Theta2_SS = sum(Theta2_SS,2);
 
