@@ -1,4 +1,4 @@
-function [J grad] = nnCostFunction(nn_params, ...
+function [cost grad] = nnCostFunction(nn_params, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
@@ -17,11 +17,11 @@ function [J grad] = nnCostFunction(nn_params, ...
 % Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices
 % for our 2 layer neural network
 
-Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
-                 hidden_layer_size, (input_layer_size + 1));
+%Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
+%                 hidden_layer_size, (input_layer_size + 1));
 
-Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
-                 num_labels, (hidden_layer_size + 1));
+%Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
+%                 num_labels, (hidden_layer_size + 1));
 
 % random initialisation
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -36,10 +36,10 @@ X = [ones(m, 1) X];
 
 % for loop
 
-%iT1t = initial_Theta1';
-%iT2t = initial_Theta2';
-iT1t = Theta1';
-iT2t = Theta2';
+iT1t = initial_Theta1';
+iT2t = initial_Theta2';
+%iT1t = Theta1';
+%iT2t = Theta2';
 a2 = ones(m,hidden_layer_size+1);
 
 for k = 1:num_labels
@@ -64,7 +64,7 @@ a2g = a2(:,2:end);
 Theta1_grad = a2g' * X;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
-J = (1/m) * grad;
+cost = (1/m) * sum(grad);
 
 %% 
 
