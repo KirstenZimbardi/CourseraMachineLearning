@@ -41,55 +41,8 @@ initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 % Unroll parameters
 initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
-%% nnCostFunction
 
-% random initialisation
-initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
-initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
-initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
-
-            
-% adding X0            
-[m, n] = size(X);
-X = [ones(m, 1) X];
-[m, n] = size(X);
-
-iT1t = initial_Theta1';
-iT2t = initial_Theta2';
-%iT1t = Theta1';
-%iT2t = Theta2';
-a2 = ones(m,hidden_layer_size+1);
-D2 = zeros(num_labels, hidden_layer_size);
-
-for k = 1:num_labels
-    c(:,k) = y == k;
-end
-
-%% for loop
-for t = 1:m
-    %forward layer 1 -> 2
-    z(t,:) = X(t,:) * iT1t;
-    %forward layer 2 -> 3
-    a2(t,2:end) = sigmoid(z(t,:));
-    z2(t,:) = a2(t,:) * iT2t;
-    h(t,:) = sigmoid(z2(t,:));
-    %error in layer 3
-    d3(t,:) = h(t,:) - c(t,:);
-    %back prop layer 3 -> 2
-    %d2(t,:) = h(t,:) .* (1-h(t,:)); %old version
-    d3t = d3';
-    d2 = d3t(:,t) * a2(t,2:end);
-    D2 = D2 + d2;
-end
-
-%% gradient
-Theta2_grad = d3' * a2;
-%D2g = D2(:,2:end);
-Theta1_grad = D2 * X;
-grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
-J = (1/m) * sum(grad);
-
+%nnCostFunction sandpit goes here
 
 
 
