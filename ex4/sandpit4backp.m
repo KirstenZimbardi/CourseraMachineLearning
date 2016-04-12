@@ -46,7 +46,7 @@ a2g = a2(:,2:end);
 Theta1_grad = a2g' * X;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
-J = (1/m) * grad;
+D = (1/m) * grad;
 
 %% 
 % error for layer 2
