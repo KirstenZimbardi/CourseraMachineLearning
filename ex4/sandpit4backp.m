@@ -20,59 +20,48 @@ X = [ones(m, 1) X];
 
 %% test for loop
 
-T1t = Theta1';
-T2t = Theta2';
+iT1t = initial_Theta1';
+iT2t = initial_Theta2';
 a2 = ones(m,hidden_layer_size+1);
 
-for t = 1:m
-    %forward layer 1 -> 2
-    z(t,:) = X(t,:) * T1t;
-    %forward layer 2 -> 3
-    a2(t,2:end) = sigmoid(z(t,:));
-    z2(t,:) = a2(t,:) * T2t;
-    h(t,:) = sigmoid(z2(t,:));
-end
-
-
-%% for loop
-
-for t = 1:m
-    %forward propagation
-    % layer 1 -> 2
-    iT1t = initial_Theta1'
-    z(t,:) = X(t,:) * iT1t(t,:);
-    a2 = sigmoid(z);
-    % layer 2 ->3
-    a2 = [ones(m, 1) a2];
-    z2 = a2 * initial_Theta2';
-    h = sigmoid(z2);
-
-%% 
-%error for layer 3
 for k = 1:num_labels
     c(:,k) = y == k;
 end
-d3 = h - c;
-%% 
-% error for layer 2
-d2 = h .* (1-h); %old version
 
-% new version not working yet
-%sg = sigmoidGradient(z2); 
-%d2a = d3 * Theta2;
-%d2 =d2a .* sg;
-% no error for layer 1 since that is the data input
+for t = 1:m
+    %forward layer 1 -> 2
+    z(t,:) = X(t,:) * iT1t;
+    %forward layer 2 -> 3
+    a2(t,2:end) = sigmoid(z(t,:));
+    z2(t,:) = a2(t,:) * iT2t;
+    h(t,:) = sigmoid(z2(t,:));
+    %back prop layer 3 ->
+    d3(t,:) = h(t,:) - c(t,:);
+    d2(t,:) = h(t,:) .* (1-h(t,:)); %old version
+end
 
-%% 
 %gradient
 Theta2_grad = d3' * a2;
 a2g = a2(:,2:end);
 Theta1_grad = a2g' * X;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
+J = (1/m) * grad;
+
+%% 
+% error for layer 2
+% new version not working 
+%sg = sigmoidGradient(z2); 
+%d2a = d3 * Theta2;
+%d2 =d2a .* sg;
+% no error for layer 1 since that is the data input
+
+%% 
+
+
 
 %% cost
 % J = grad/m ie 1/m * grad
 
-J = (1/m) * grad;
+
 
