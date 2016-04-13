@@ -47,8 +47,8 @@ a2 = ones(m,hidden_layer_size+1);
 z3 = zeros(m,num_labels);
 h = zeros(m,num_labels);
 d3 = zeros(1,num_labels);
-d2 = zeros(1,hidden_layer_size+1);
-Delta2 = zeros(1, hidden_layer_size+1);
+d2 = zeros(1,n);
+%D2 = zeros(num_labels, hidden_layer_size);
 
 for k = 1:num_labels
     c(:,k) = y == k;
@@ -73,16 +73,14 @@ end
     %d2 = d3t(:,t) * a2(t,2:end); %prev version
     %new version of d2 accumulating error for each training eg
     %d2 = (theta2' * d3) .* (a2 .* (1-a2))
-    d21 = d3 * initial_Theta2;
-    d22 = a2(t,:) .* (1 - a2(t,:));
-    d2 = d21 .* d22;
-    Delta2 = Delta2 + d2;
+    d2 = iT2t * d3;
+    D2 = D2 + d2;
 %end
 
 %% gradient
 Theta2_grad = d3' * a2;
 %D2g = D2(:,2:end);
-Theta1_grad = Delta2 * X;
+Theta1_grad = D2 * X;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 J = (1/m) * sum(grad);
