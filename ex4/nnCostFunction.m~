@@ -46,9 +46,11 @@ z2 = zeros(m,hidden_layer_size);
 a2 = ones(m,hidden_layer_size+1);
 z3 = zeros(m,num_labels);
 h = zeros(m,num_labels);
-d3 = zeros(1,num_labels);
+%d3 = zeros(1,num_labels);
+d3 = zeros(m,num_labels);
 Delta3 = zeros(1,num_labels);
-d2 = zeros(1,hidden_layer_size+1);
+%d2 = zeros(1,hidden_layer_size+1);
+d2 = zeros(m,hidden_layer_size+1);
 Delta2 = zeros(1, hidden_layer_size+1);
 
 for k = 1:num_labels
@@ -64,17 +66,12 @@ for t = 1:m
     z3(t,:) = a2(t,:) * iT2t;
     h(t,:) = sigmoid(z3(t,:));
     %error in layer 3
-    %d3(t,:) = h(t,:) - c(t,:); %prev version - not accumulating error over
-    %iterations because new error going into new row each time - try
-    %accumulating error instead:
-    d3 = h(t,:) - c(t,:);
+    %accumulating error for d3 from each iteration:
+    %d3 = h(t,:) - c(t,:);
+    
     Delta3 = Delta3 + d3;
     %back prop layer 3 -> 2
-    %d2(t,:) = h(t,:) .* (1-h(t,:)); %very old version
-    %d3t = d3'; %prev version
-    %d2 = d3t(:,t) * a2(t,2:end); %prev version
     %new version of d2 accumulating error for each training eg
-    %d2 = (theta2' * d3) .* (a2 .* (1-a2))
     d21 = d3 * initial_Theta2;
     d22 = a2(t,:) .* (1 - a2(t,:));
     d2 = d21 .* d22;

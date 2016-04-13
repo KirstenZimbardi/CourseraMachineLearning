@@ -46,9 +46,11 @@ z2 = zeros(m,hidden_layer_size);
 a2 = ones(m,hidden_layer_size+1);
 z3 = zeros(m,num_labels);
 h = zeros(m,num_labels);
-d3 = zeros(1,num_labels);
+%d3 = zeros(1,num_labels);
+d3 = zeros(m,num_labels);
 Delta3 = zeros(1,num_labels);
-d2 = zeros(1,hidden_layer_size+1);
+%d2 = zeros(1,hidden_layer_size+1);
+d2 = zeros(m,hidden_layer_size+1);
 Delta2 = zeros(1, hidden_layer_size+1);
 
 for k = 1:num_labels
@@ -65,14 +67,20 @@ for t = 1:m
     h(t,:) = sigmoid(z3(t,:));
     %error in layer 3
     %accumulating error for d3 from each iteration:
-    d3 = h(t,:) - c(t,:);
-    Delta3 = Delta3 + d3;
+    %d3 = h(t,:) - c(t,:);
+    %non accum version
+    d3(t,:) = h(t,:) - c(t,:);
+    Delta3 = Delta3 + d3(t,:);
     %back prop layer 3 -> 2
     %new version of d2 accumulating error for each training eg
-    d21 = d3 * initial_Theta2;
-    d22 = a2(t,:) .* (1 - a2(t,:));
-    d2 = d21 .* d22;
-    Delta2 = Delta2 + d2;
+    %d21 = d3 * initial_Theta2;
+    %d22 = a2(t,:) .* (1 - a2(t,:));
+    %d2 = d21 .* d22;
+    %non accum version
+    d21(t,:) = d3(t,:) * initial_Theta2;
+    d22(t,:) = a2(t,:) .* (1 - a2(t,:));
+    d2(t,:) = d21(t,:) .* d22(t,:);
+    Delta2 = Delta2 + d2(t,:);
 end
 
 %% D (ie partial derivative of Jtheta)
