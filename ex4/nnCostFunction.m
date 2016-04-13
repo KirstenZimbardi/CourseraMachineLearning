@@ -64,17 +64,11 @@ for t = 1:m
     z3(t,:) = a2(t,:) * iT2t;
     h(t,:) = sigmoid(z3(t,:));
     %error in layer 3
-    %d3(t,:) = h(t,:) - c(t,:); %prev version - not accumulating error over
-    %iterations because new error going into new row each time - try
-    %accumulating error instead:
+    %accumulating error for d3 from each iteration:
     d3 = h(t,:) - c(t,:);
     Delta3 = Delta3 + d3;
     %back prop layer 3 -> 2
-    %d2(t,:) = h(t,:) .* (1-h(t,:)); %very old version
-    %d3t = d3'; %prev version
-    %d2 = d3t(:,t) * a2(t,2:end); %prev version
     %new version of d2 accumulating error for each training eg
-    %d2 = (theta2' * d3) .* (a2 .* (1-a2))
     d21 = d3 * initial_Theta2;
     d22 = a2(t,:) .* (1 - a2(t,:));
     d2 = d21 .* d22;
@@ -90,21 +84,6 @@ grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 %cost
 J = (1/m) * (sum(sum((c .* log(h)) + ((1-c) .* log(h)),2),1));
-
-
-%% gradient
-Theta2_grad = d3' * a2;
-%D2g = D2(:,2:end);
-Theta1_grad = Delta2 * X;
-grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
-%% cost
-
-J = (1/m) * sum(grad)
-%errorK = (y .* log(h)) + ((1-y) .* log(h));
-%ErrorK = (c .* log(h)) + ((1-c) .* log(h));
-%SumErrorK = sum(ErrorK)
-
 
 
 

@@ -13,8 +13,8 @@ function numgrad = computeNumericalGradient(J, theta)
 %        to theta(i).)
 %                
 
-theta = nn_params;
-J = costFunc;
+%theta = nn_params;
+%J = costFunc;
 
 numgrad = zeros(size(theta));
 perturb = zeros(size(theta));
