@@ -56,7 +56,7 @@ for k = 1:num_labels
 end
 
 %% for loop
-%for t = 1:m
+for t = 1:m
     %forward layer 1 -> 2
     z2(t,:) = X(t,:) * iT1t;
     %forward layer 2 -> 3
@@ -79,11 +79,17 @@ end
     d22 = a2(t,:) .* (1 - a2(t,:));
     d2 = d21 .* d22;
     Delta2 = Delta2 + d2;
-%end
+end
 
 %% D (ie partial derivative of Jtheta)
-D2 = (1/m) * Delta2;
-D3 = (1/m) * Delta2;
+Theta1_grad = (1/m) * Delta2;
+Theta2_grad = (1/m) * Delta3;
+
+%unrolling
+grad = [Theta1_grad(:) ; Theta2_grad(:)];
+
+%cost
+J = (1/m) * (sum(sum((c .* log(h)) + ((1-c) .* log(h)),2),1));
 
 
 %% gradient
@@ -92,7 +98,15 @@ Theta2_grad = d3' * a2;
 Theta1_grad = Delta2 * X;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
-J = (1/m) * sum(grad);
+%% cost
+
+J = (1/m) * sum(grad)
+%errorK = (y .* log(h)) + ((1-y) .* log(h));
+%ErrorK = (c .* log(h)) + ((1-c) .* log(h));
+%SumErrorK = sum(ErrorK)
+
+
+
 
 %% 
 
