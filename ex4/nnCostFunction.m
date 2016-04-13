@@ -47,6 +47,7 @@ a2 = ones(m,hidden_layer_size+1);
 z3 = zeros(m,num_labels);
 h = zeros(m,num_labels);
 d3 = zeros(1,num_labels);
+Delta3 = zeros(1,num_labels);
 d2 = zeros(1,hidden_layer_size+1);
 Delta2 = zeros(1, hidden_layer_size+1);
 
@@ -67,6 +68,7 @@ end
     %iterations because new error going into new row each time - try
     %accumulating error instead:
     d3 = h(t,:) - c(t,:);
+    Delta3 = Delta3 + d3;
     %back prop layer 3 -> 2
     %d2(t,:) = h(t,:) .* (1-h(t,:)); %very old version
     %d3t = d3'; %prev version
@@ -78,6 +80,11 @@ end
     d2 = d21 .* d22;
     Delta2 = Delta2 + d2;
 %end
+
+%% D (ie partial derivative of Jtheta)
+D2 = (1/m) * Delta2;
+D3 = (1/m) * Delta2;
+
 
 %% gradient
 Theta2_grad = d3' * a2;
