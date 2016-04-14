@@ -70,6 +70,7 @@ end
 %forward layer 1 -> 2
 z2 = X * initial_Theta1';
 a2 = sigmoid(z2);
+a2 = [ones(m,1) a2];
 %forward layer 2 -> 3
 z3 = a2 * initial_Theta2';
 h = sigmoid(z3);
@@ -80,7 +81,8 @@ J = (1/m) * (sum(sum((c .* log(h)) + ((1-c) .* log(h)),2),1));
 %errors
 d3 = h - c;
 d2 = d3 * initial_Theta2(:,2:end) .* sigmoidGradient(z2);
-    
+
+%gradients and scaling
 Delta1 = d2' * X;
 Theta1_grad = (1/m) * Delta1;
     
