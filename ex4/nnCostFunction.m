@@ -15,9 +15,9 @@ function [J grad] = nnCostFunction(nn_params, ...
 %
          
 % You need to return the following variables correctly 
-J = 0;
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
+%J = 0;
+%Theta1_grad = zeros(size(initial_Theta1));
+%Theta2_grad = zeros(size(initial_Theta2));
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
