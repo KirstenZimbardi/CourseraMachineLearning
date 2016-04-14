@@ -47,11 +47,15 @@ a2 = ones(m,hidden_layer_size+1);
 z3 = zeros(m,num_labels);
 h = zeros(m,num_labels);
 %d3 = zeros(1,num_labels);
-d3 = zeros(m,num_labels);
-Delta3 = zeros(1,num_labels);
+%d3 = zeros(m,num_labels); %wrong dim for grad
+%grad dim for d3  is num_labels x hidden_layer_size+1
+d3 = zeros(num_labels, hidden_layer_size+1);
+Delta3 = zeros(1,hidden_layer_size+1);
 %d2 = zeros(1,hidden_layer_size+1);
-d2 = zeros(m,hidden_layer_size+1);
-Delta2 = zeros(1, hidden_layer_size+1);
+%d2 = zeros(m,hidden_layer_size+1); %wrong dim for grad
+%grad dim for d2 hidden_layer_size x n+1 features
+d2 = zeros(hidden_layer_size, input_layer_size+1);
+Delta2 = zeros(1, input_layer_size+1);
 
 for k = 1:num_labels
     c(:,k) = y == k;
@@ -70,6 +74,7 @@ for t = 1:m
     %d3 = h(t,:) - c(t,:);
     %non accum version
     d3(t,:) = h(t,:) - c(t,:);
+    %d = [zeros(1,3); d]; where 3 is num_labels
     Delta3 = Delta3 + d3(t,:);
     %back prop layer 3 -> 2
     %new version of d2 accumulating error for each training eg
