@@ -49,28 +49,37 @@ h = sigmoid(z3);
 %errors
 d3 = (h - c);
 d2 = d3 * initial_Theta2(:,2:end) .* sigmoidGradient(z2);
+
+%gradients 
 Delta1 = d2' * X;
 Delta2 = d3' * a2;
 
+%scaling
+Theta1_grad = (1/m) * Delta1;
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) ...
+    + ((lambda/m) * initial_Theta1(:,2:end));
 
-Theta1_grad = (1/m) * Delta1
-  
-%Delta2 = d3' * a2;
-%Delta2 = d3 * a2;
-%Delta2 = zeros(size(initial_Theta2));
-%for t = 1:m
-%    Delta2 = Delta2 + d3' * a2;
-%    t = t+1;
-%end 
-Theta2_grad = (1/m) * Delta2
+Theta2_grad = (1/m) * Delta2;
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) ...
+    + ((lambda/m) * initial_Theta2(:,2:end));
+
 
 %unrolling
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 %cost
-%cost = (-c .* log(h)) - ((1-c) .* (1- log(h)));
-%costSum = sum(cost,2);
-%costSSum = sum(costSum);
-%J = (1/m) * costSSum;
-J = (1/m) * (sum(sum((- c .* log(h)) - ((1-c) .* log(1-h)),2),1));
+J = ((1/m) * (sum(sum((- c .* log(h)) - ((1-c) .* log(1-h)),2),1)) ) ...
+    + ((lambda/2*m) * ( sum(sum(initial_Theta1.^2,2),1) ...
+    + sum(sum(initial_Theta2.^2,2),1) ) );
+
+%% Cost
+
+E = (-c .* log(h)) - ((1-c) .* log(1-h));
+
+%J = 1/m * sum(E)
+
+T1 = (initial_Theta1(2:n) .* initial_Theta1(2:n));
+
+J = 1/m * sum(E) + (lambda/(2*m) * reg);
+
 end

@@ -55,12 +55,26 @@ Delta1 = d2' * X;
 Delta2 = d3' * a2;
 
 %scaling
-Theta1_grad = (1/m) * Delta1
-Theta2_grad = (1/m) * Delta2
+Theta1_grad = (1/m) * Delta1;
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) ...
+    + ((lambda/m) * initial_Theta1(:,2:end));
+
+Theta2_grad = (1/m) * Delta2;
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) ...
+    + ((lambda/m) * initial_Theta2(:,2:end));
+
 
 %unrolling
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 %cost
-J = (1/m) * (sum(sum((- c .* log(h)) - ((1-c) .* log(1-h)),2),1));
+E = (-c .* log(h)) - ((1-c) .* log(1-h));
+ssE = sum(sum(E,2),1);
+
+ssT1 = sum(sum(initial_Theta1(:,2:end) .^2,2),1);
+ssT2 = sum(sum(initial_Theta2(:,2:end) .^2,2),1);
+reg = ssT1 + ssT2;
+
+J = (1/m * ssE) + (lambda/(2*m) * reg);
+
 end
