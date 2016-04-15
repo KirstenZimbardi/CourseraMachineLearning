@@ -52,10 +52,18 @@ function [J grad] = nnCostFunction(nn_params, ...
 %
 
 % random initialisation
-initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
-initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
-initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
+%initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
+%initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+%initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
+% We generate some 'random' test data
+%Theta1 = debugInitializeWeights(hidden_layer_size, input_layer_size);
+%Theta2 = debugInitializeWeights(num_labels, hidden_layer_size);
+
+initial_Theta1 = reshape(nn_params(1:(hidden_layer_size * (input_layer_size+1))),[hidden_layer_size,(input_layer_size+1)]);
+initial_Theta2 = reshape(nn_params((hidden_layer_size * (input_layer_size+1))+1:end),[num_labels, (hidden_layer_size+1)]);
+
+%initial_nn_params = nn_params;
             
 % adding X0            
 [m, n] = size(X);
@@ -68,30 +76,63 @@ for k = 1:num_labels
 end
 
 %forward layer 1 -> 2
-z2 = X * initial_Theta1';
-a2 = sigmoid(z2);
-a2 = [ones(m,1) a2];
+%z2 = X * initial_Theta1';
+%a2 = sigmoid(z2);
+%a2 = [ones(m,1) a2];
 %forward layer 2 -> 3
-z3 = a2 * initial_Theta2';
-h = sigmoid(z3);
-
-%cost
-J = (1/m) * (sum(sum((c .* log(h)) + ((1-c) .* log(h)),2),1));
+%z3 = a2 * initial_Theta2';
+%h = sigmoid(z3);
     
 %errors
-d3 = h - c;
-d2 = d3 * initial_Theta2(:,2:end) .* sigmoidGradient(z2);
+%d3 = - (c - h) .* sigmoidGradient(z3);
+%d3 = (h - c);
+%d2 = d3 * initial_Theta2(:,2:end) .* sigmoidGradient(z2);
 
 %gradients and scaling
-Delta1 = d2' * X;
-Theta1_grad = (1/m) * Delta1;
-    
-Delta2 = d3' * a2;
-Theta2_grad = (1/m) * Delta2;
+%Delta1 = d2' * X;
+%Theta1_grad = (1/m) * Delta1;   
+%Delta2 = d3' * a2;
+%Theta2_grad = (1/m) * Delta2;
 
+%gradients and scaling
+Delta1 = zeros(size(initial_Theta1));
+Delta2 = zeros(size(initial_Theta2));
+
+%for t = 1:m
+    z2 = X * initial_Theta1';
+    a2 = sigmoid(z2);
+    a2 = [ones(m,1) a2];
+    %forward layer 2 -> 3
+    z3 = a2 * initial_Theta2';
+    h = sigmoid(z3);
+
+    %errors
+    %d3 = - (c - h) .* sigmoidGradient(z3);
+    d3 = (h - c);
+    d2 = d3 * initial_Theta2(:,2:end) .* sigmoidGradient(z2);
+    Delta1 = Delta1 + d2' * X;
+    Delta2 = Delta2 + d3' * a2;
+%end 
+
+%Delta1 = sum(sum(d2,2)) * X;
+Theta1_grad = (1/m) * Delta1
+  
+%Delta2 = d3' * a2;
+%Delta2 = d3 * a2;
+%Delta2 = zeros(size(initial_Theta2));
+%for t = 1:m
+%    Delta2 = Delta2 + d3' * a2;
+%    t = t+1;
+%end 
+Theta2_grad = (1/m) * Delta2
 
 %unrolling
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
-
+%cost
+%cost = (-c .* log(h)) - ((1-c) .* (1- log(h)));
+%costSum = sum(cost,2);
+%costSSum = sum(costSum);
+%J = (1/m) * costSSum;
+J = (1/m) * (sum(sum((- c .* log(h)) - ((1-c) .* log(1-h)),2),1));
 end

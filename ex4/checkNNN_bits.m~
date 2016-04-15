@@ -29,25 +29,13 @@ costFunc = @(p) nnCostFunction(p, input_layer_size, hidden_layer_size, ...
 %% run numgrad
 numgrad = computeNumericalGradient(costFunc, nn_params);
 
-%% compare
-disp([numgrad grad]);
-diff = norm(numgrad-grad)/norm(numgrad+grad)
-
-
 %% run nnCostFunction manually
 
 % random initialisation
-%initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
-%initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
-%initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
+initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
+initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
-% We generate some 'random' test data
-Theta1 = debugInitializeWeights(hidden_layer_size, input_layer_size);
-Theta2 = debugInitializeWeights(num_labels, hidden_layer_size);
-
-initial_Theta1 = Theta1
-initial_Theta2 = Theta2
-initial_nn_params = nn_params;
             
 % adding X0            
 [m, n] = size(X);
@@ -59,7 +47,6 @@ for k = 1:num_labels
     c(:,k) = y == k;
 end
 
-%%
 %forward layer 1 -> 2
 z2 = X * initial_Theta1';
 a2 = sigmoid(z2);
@@ -80,19 +67,12 @@ d2 = d3 * initial_Theta2(:,2:end) .* sigmoidGradient(z2);
 Delta1 = zeros(size(initial_Theta1));
 for t = 1:m
     Delta1 = Delta1 + d2' * X;
-    t = t+1;
-end 
-%%
+    
 %Delta1 = sum(sum(d2,2)) * X;
 Theta1_grad = (1/m) * Delta1;
 %%    
-%Delta2 = d3' * a2;
+Delta2 = d3' * a2;
 %Delta2 = d3 * a2;
-Delta2 = zeros(size(initial_Theta2));
-for t = 1:m
-    Delta2 = Delta2 + d3' * a2;
-    t = t+1;
-end 
 Theta2_grad = (1/m) * Delta2
 %%
 
@@ -112,11 +92,14 @@ e = 1e-4;
 for p = 1:numel(theta)
     % Set perturbation vector
     perturb(p) = e;
-    loss1 = J(theta - perturb)
-    loss2 = J(theta + perturb)
+    loss1 = J(theta - perturb);
+    loss2 = J(theta + perturb);
     % Compute Numerical Gradient
     numgrad(p) = (loss2 - loss1) / (2*e);
     perturb(p) = 0;
 end
-numgrad
 
+
+%% compare
+disp([numgrad grad]);
+diff = norm(numgrad-grad)/norm(numgrad+grad)
