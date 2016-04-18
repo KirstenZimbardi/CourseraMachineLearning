@@ -11,15 +11,9 @@ function [theta] = trainLinearReg(X, y, lambda)
 %X = [ones(m, 1) X];
 %[m, n] = size(X);
 
-if (X(1:m,1) ~= ones(m,1)) 
-   X = [ones(m, 1) X];
-   [m, n] = size(X);
-end     
-
-
 % Initialize Theta
-%initial_theta = zeros((n+1), 1); 
-initial_theta = zeros(n, 1); 
+initial_theta = zeros(n+1), 1); 
+%initial_theta = zeros(n, 1); 
 
 
 % Create "short hand" for the cost function to be minimized
