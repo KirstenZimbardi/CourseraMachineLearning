@@ -1,4 +1,4 @@
-function [J, grad] = linearRegCostFunction(X, y, theta, lambda)
+function [J, grad] = linearRegCostFunctionNoR(X, y, theta, lambda)
 %LINEARREGCOSTFUNCTION Compute cost and gradient for regularized linear 
 %regression with multiple variables
 %   [J, grad] = LINEARREGCOSTFUNCTION(X, y, theta, lambda) computes the 
@@ -12,7 +12,13 @@ function [J, grad] = linearRegCostFunction(X, y, theta, lambda)
 %theta = initial_theta;
 
 [m, n] = size(X);
-% add X0 IF needed 
+% add X0 % not needed for ex5 coz ones added in function call      
+%if (X(1:m,1) == ones(m,1)) 
+%    fprintf('All good, X has Xo column/n');
+%else X = [ones(m, 1) X];
+%end
+%[m, n] = size(X);
+
 if (X(1:m,1) ~= ones(m,1)) 
    X = [ones(m, 1) X];
    [m, n] = size(X);
@@ -32,16 +38,25 @@ grad = zeros(size(theta));
 h = X * theta;
 
 E = h - y;
-
 SSE = sum(E.^2);
-%J = 1/(2*m) * SSE;
-Jreg = sum(theta(2:end,:).^2);
-J = (1/(2*m) * SSE) + (lambda/(2*m) * Jreg);
+
+J = 1/(2*m) * SSE;
+%Jreg = sum(theta(2:end,:).^2);
+%J = (1/(2*m) * SSE) + (lambda/(2*m) * Jreg);
+
+%Ej = repmat(E,1,n);
+%Egrad = Ej .* X;
+%grad = 1/m * sum(Egrad);
 
 grad = (1/m) * (X' * E);
-gradReg = (lambda/m) * theta(2:end,:);
-grad = grad + [zeros(1,1); gradReg];
+theta = theta - grad;
+
+%gradReg = (lambda/m) * theta(2:end,:);
+%gradReg = repmat(gradReg,1,n);
+%grad = grad + [zeros(1,1) gradReg'];
 
 % =========================================================================
+
+%grad = grad(:);
 
 end

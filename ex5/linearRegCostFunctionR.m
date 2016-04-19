@@ -13,13 +13,17 @@ function [J, grad] = linearRegCostFunction(X, y, theta, lambda)
 
 [m, n] = size(X);
 % add X0 % not needed for ex5 coz ones added in function call      
-if (X(1:m,1) == ones(m,1)) 
-    fprintf('All good, X has Xo column/n');
-else X = [ones(m, 1) X];
-end
-[m, n] = size(X);
+%if (X(1:m,1) == ones(m,1)) 
+%    fprintf('All good, X has Xo column/n');
+%else X = [ones(m, 1) X];
+%end
+%[m, n] = size(X);
 
-if (X(1:m,1) == ones(m,1)) 
+if (X(1:m,1) ~= ones(m,1)) 
+   X = [ones(m, 1) X];
+   [m, n] = size(X);
+end     
+    
 
 % You need to return the following variables correctly 
 J = 0;
@@ -45,8 +49,8 @@ Egrad = Ej .* X;
 grad = 1/m * sum(Egrad);
 
 gradReg = (lambda/m) * theta(2:end,:);
-gradReg = repmat(gradReg,1,n);
-grad = grad + gradReg;
+%gradReg = repmat(gradReg,1,n);
+grad = grad + [zeros(1,1) gradReg'];
 
 % =========================================================================
 

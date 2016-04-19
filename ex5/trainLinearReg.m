@@ -7,10 +7,7 @@ function [theta] = trainLinearReg(X, y, lambda)
 %
 
 [m, n] = size(X);
-% add X0 % not needed for ex5 coz ones added in function call           
-%X = [ones(m, 1) X];
-%[m, n] = size(X);
-
+% add X0 IF  needed 
 if (X(1:m,1) ~= ones(m,1)) 
    X = [ones(m, 1) X];
    [m, n] = size(X);
@@ -18,7 +15,6 @@ end
 
 
 % Initialize Theta
-%initial_theta = zeros((n+1), 1); 
 initial_theta = zeros(n, 1); 
 
 

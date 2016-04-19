@@ -16,6 +16,7 @@ function [error_train, error_val] = ...
 
 % Number of training examples
 %m = size(X, 1);
+%[m, n] = size(X);
 
 % You need to return these values correctly
 error_train = zeros(size(X, 1), 1);
@@ -53,21 +54,18 @@ error_val   = zeros(size(X, 1), 1);
 
 % ---------------------- Sample Solution ----------------------
 
-theta = trainLinearReg(X, y, lambda);
-costFunction = @(X, y) linearRegCostFunction(X, y, theta, 0);
+
+costFx = @(X, y, theta, l) linearRegCostFunction(X, y, theta, l);
+
+%Compute train/cross validation errors using training examples 
 
 for i = 1:size(X,1)
-    %Compute train/cross validation errors using training examples 
-    error_train(i) = costFunction(X(1:i,:), y(1:i)); % storing the result in  
+    theta = trainLinearReg(X(1:i,:), y(1:i), lambda)
+    error_train(i) = costFx(X(1:i,:), y(1:i), theta, 0)  
+    error_val(i)  = costFx(Xval, yval, theta, 0)
 end
 
 
-for i = 1:size(X,1)
-    error_val(i)  = costFunction(Xval(1:i,:), yval(1:i));
-end
-
-error_train = error_train(:);
-error_val  = error_val(:);
 % -------------------------------------------------------------
 
 % =========================================================================
