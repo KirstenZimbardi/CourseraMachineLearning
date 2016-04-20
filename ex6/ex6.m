@@ -90,8 +90,8 @@ load('ex6data2.mat');
 % Plot training data
 plotData(X, y);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+%fprintf('Program paused. Press enter to continue.\n');
+%pause;
 
 %% ========== Part 5: Training SVM with RBF Kernel (Dataset 2) ==========
 %  After you have implemented the kernel, we can now use it to train the 
@@ -112,8 +112,8 @@ C = 1; sigma = 0.1;
 model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); 
 visualizeBoundary(X, y, model);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+%fprintf('Program paused. Press enter to continue.\n');
+%pause;
 
 %% =============== Part 6: Visualizing Dataset 3 ================
 %  The following code will load the next dataset into your environment and 
@@ -129,8 +129,8 @@ load('ex6data3.mat');
 % Plot training data
 plotData(X, y);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+%fprintf('Program paused. Press enter to continue.\n');
+%pause;
 
 %% ========== Part 7: Training SVM with RBF Kernel (Dataset 3) ==========
 
@@ -149,6 +149,6 @@ load('ex6data3.mat');
 model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
 visualizeBoundary(X, y, model);
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+%fprintf('Program paused. Press enter to continue.\n');
+%pause;
 
