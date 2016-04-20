@@ -60,9 +60,9 @@ costFx = @(X, y, theta, l) linearRegCostFunction(X, y, theta, l);
 %Compute train/cross validation errors using training examples 
 
 for i = 1:size(X,1)
-    theta = trainLinearReg(X(1:i,:), y(1:i), lambda)
-    error_train(i) = costFx(X(1:i,:), y(1:i), theta, 0)  
-    error_val(i)  = costFx(Xval, yval, theta, 0)
+    theta = trainLinearReg(X(1:i,:), y(1:i), lambda);
+    error_train(i) = costFx(X(1:i,:), y(1:i), theta, 0);
+    error_val(i)  = costFx(Xval, yval, theta, 0);
 end
 
 

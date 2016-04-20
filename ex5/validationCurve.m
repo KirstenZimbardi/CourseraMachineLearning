@@ -27,17 +27,26 @@ error_val = zeros(length(lambda_vec), 1);
 %
 % Note: You can loop over lambda_vec with the following:
 %
-%       for i = 1:length(lambda_vec)
-%           lambda = lambda_vec(i);
+%costFx = @(X, y, theta, lambda) linearRegCostFunction(X, y, theta, lambda);
+costFx = @(X, y, theta, lambda) linearRegCostFunction(X, y, theta, lambda);
+
+for i = 1:length(lambda_vec)
+    lambda = lambda_vec(i);
+    theta = trainLinearReg(X, y, lambda);
+    error_train(i) = costFx(X, y, theta, 0);
+    error_val(i)  = costFx(Xval, yval, theta, 0);
+end
 %           % Compute train / val errors when training linear 
 %           % regression with regularization parameter lambda
 %           % You should store the result in error_train(i)
 %           % and error_val(i)
-%           ....
-%           
-%       end
-%
-%
+
+
+
+%Compute train/cross validation errors using training examples 
+
+%for i = 1:size(X,1)
+    
 
 
 
