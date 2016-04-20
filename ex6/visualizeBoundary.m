@@ -3,6 +3,14 @@ function visualizeBoundary(X, y, model, varargin)
 %   VISUALIZEBOUNDARYLINEAR(X, y, model) plots a non-linear decision 
 %   boundary learned by the SVM and overlays the data on it
 
+%Note: Error in visualizeBoundary.m. Change the call to contour() like this:
+%contour(X1, X2, vals, [1 1], 'b');
+%(This change removes the attribute 'Color', and changes the contour interval. 
+%Note that [0.5 0.5] also works and is more logical, since "vals" has range [0..1])
+%This issue can cause either the "hggroup" error message, 
+%or the decision boundaries to not be displayed, 
+%or possibly cause Octave 3.8.x to crash when running ex6.m.
+
 % Plot the training data on top of the boundary
 plotData(X, y)
 

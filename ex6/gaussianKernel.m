@@ -15,9 +15,8 @@ sim = 0;
 %               sigma
 %
 %
-
-
-
+%dif = sum((x1-x2).^2)
+sim = exp(- (sum((x1-x2).^2)) / (2*(sigma^2)));
 
 
 
