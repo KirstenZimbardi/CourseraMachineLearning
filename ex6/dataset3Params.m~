@@ -29,13 +29,18 @@ pred_error = zeros(length(C_vec), length(sigma_vec));
 
 for c = 1:length(C_vec)
     for s = 1:length(sigma_vec)
-        model = svmTrain(X, y, C_vec(c), @(x1, x2) gaussianKernel(x1, x2, sigma_vecs)); %too simple? 
+        model = svmTrain(X, y, C_vec(c), @(x1, x2) gaussianKernel(x1, x2, sigma_vec(s)));
         predictions = svmPredict(model, Xval);
         pred_error(c,s) = mean(double(predictions ~= yval));
     end
 end
 
 [smallest_error, index] = min(pred_error(:));
+
+j = fix(index/size(pred_error,1)) +
+i = rem(index,size(pred_error,1))
+
+pred_error(i,j)
 
 %check
 C = C_vec(1)

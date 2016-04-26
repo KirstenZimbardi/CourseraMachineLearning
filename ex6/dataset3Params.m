@@ -37,39 +37,20 @@ end
 
 [smallest_error, index] = min(pred_error(:));
 
-%check
-C = C_vec(1)
-sigma = sigma_vec(6)
-model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); %too simple? 
-predict = svmPredict(model, Xval);
-predict_error = mean(double(predict ~= yval))
-
-[m, n] = size(pred_error)
-%pe = pred_error(:);
-
-epred_error(c,s) == pred_error(index)
-
-for c = 1:length(C_vec)
-    for s = 1:length(sigma_vec)
-        if pred_error(c,s) == pred_error(index)
-            { C_val = c } ;
-        end
-    end
+j = fix(index/size(pred_error,1));
+i = rem(index,size(pred_error,1));
+if i > 0
+    j = j+1;
 end
-
-
- = pred_error(index);
+if i == 0
+    i = i+size(pred_error,1);
 end
-if index/m >1
-    col = 
+    
+%pred_error(i,j)
+%pred_error
 
-j = pred_error(index/m);
-i = pred_error(index/n);
-
-pred_error(i,j)
-
-
-
+C = C_vec(i)
+sigma = sigma_vec(j)
 
 
 
