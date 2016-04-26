@@ -49,9 +49,13 @@ x = zeros(n, 1);
 %
 
 
+% Load Vocabulary
+%vocabList = getVocabList();
 
-
-
+for j = 1:length(word_indices(:))
+    i = word_indices(j);
+    x(i) = 1;
+end
 
 
 
