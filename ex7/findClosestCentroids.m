@@ -21,12 +21,21 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+%centroids = initial_centroids;
+
+for i = 1:size(X,1)
+    for j = 1:size(centroids,1)
+        dif(j,:) = X(i,:) - centroids(j,:);
+    end
+    dif = dif.^2;
+    %d = sqrt(dif(:,1) + dif(:,2));
+    d = sqrt(sum(dif,2));
+    [smallest_dif, index] = min(d(:));
+    idx(i,1) = index;
+end
 
 
-
-
-
-
+    
 % =============================================================
 
 end
