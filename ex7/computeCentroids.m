@@ -27,8 +27,19 @@ centroids = zeros(K, n);
 %
 
 
+Xassign = [X idx];
 
+%Xassign(:,end) == K(i)
+%e = unique(Xassign(:,end)); % or just 1:K dep on function input for K:
+e = [1:K]';
 
+B = cell(size(e));
+
+for k = 1:numel(e) % or 1:K
+    B{k} = Xassign(Xassign(:,end)==e(k),:);
+    n = size(B{k},1)
+    centroids(k,:) = 1/n * sum(B{k}(:,1:(end-1)))
+end
 
 
 
