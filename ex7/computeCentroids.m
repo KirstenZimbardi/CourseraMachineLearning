@@ -37,11 +37,9 @@ B = cell(size(e));
 
 for k = 1:numel(e) % or 1:K
     B{k} = Xassign(Xassign(:,end)==e(k),:);
-    n = size(B{k},1)
-    centroids(k,:) = 1/n * sum(B{k}(:,1:(end-1)))
+    n = size(B{k},1);
+    centroids(k,:) = 1/n * sum(B{k}(:,1:(end-1)));
 end
-
-
 
 
 % =============================================================
