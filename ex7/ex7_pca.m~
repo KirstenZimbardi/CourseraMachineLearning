@@ -214,8 +214,8 @@ colors = palette(idx(sel), :);
 figure;
 scatter3(X(sel, 1), X(sel, 2), X(sel, 3), 10, colors);
 title('Pixel dataset plotted in 3D. Color shows centroid memberships');
-%fprintf('Program paused. Press enter to continue.\n');
-%pause;
+fprintf('Program paused. Press enter to continue.\n');
+pause;
 
 %% === Part 8(b): Optional (ungraded) Exercise: PCA for Visualization ===
 % Use PCA to project this cloud to 2D for visualization
@@ -231,5 +231,5 @@ Z = projectData(X_norm, U, 2);
 figure;
 plotDataPoints(Z(sel, :), idx(sel), K);
 title('Pixel dataset plotted in 2D, using PCA for dimensionality reduction');
-%fprintf('Program paused. Press enter to continue.\n');
-%pause;
+fprintf('Program paused. Press enter to continue.\n');
+pause;
