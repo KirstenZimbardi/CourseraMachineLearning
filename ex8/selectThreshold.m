@@ -26,7 +26,7 @@ for epsilon = min(pval):stepsize:max(pval)
 
 
 
-
+F1 = (2 * (tp/(tp+fp)) * (tp/(tp+fn)) ) / ( (tp/(tp+fp)) + (tp/(tp+fn)) )
 
 
 

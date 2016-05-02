@@ -22,12 +22,16 @@ sigma2 = zeros(n, 1);
 %
 
 
-mu = 1/m * sum(X);
+%mu = 1/m * sum(X);
+% or just use the built in function for mean - derr
+mu = mean(X);
 
-for i = 1:m
-    diff(i,:) = X(i,:) - mu;
-end
-    
+%for i = 1:m
+%    diff(i,:) = X(i,:) - mu;
+%end
+% or just use s = bsxfun(@minus, X, mu(:)'); as:
+diff = bsxfun(@minus, X, mu);
+
 sigma2 = (1/m * sum(diff.^2))';
 
 
