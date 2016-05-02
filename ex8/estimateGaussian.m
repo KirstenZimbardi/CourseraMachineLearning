@@ -30,10 +30,11 @@ mu = mean(X);
 %    diff(i,:) = X(i,:) - mu;
 %end
 % or just use s = bsxfun(@minus, X, mu(:)'); as:
-diff = bsxfun(@minus, X, mu);
-
-sigma2 = (1/m * sum(diff.^2))';
-
+%diff = bsxfun(@minus, X, mu);
+%sigma2 = (1/m * sum(diff.^2))';
+% or just use the buit in stat's toolbox:
+sigma2 = nanvar(X,1) % 'nan' in 'nanvar' removes NaN values; 
+                     %  adding ",1" as input forces use of n instead of n-1 in formula
 
 
 
