@@ -51,8 +51,8 @@ for epsilon = min(pval):stepsize:max(pval)
     % =============================================================
 
     if F1 > bestF1
-       bestF1 = F1
-       bestEpsilon = epsilon
+       bestF1 = F1;
+       bestEpsilon = epsilon;
     end
     
     % had to take break condition out to get submit successful
