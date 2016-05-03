@@ -11,9 +11,8 @@ bestF1 = 0;
 F1 = 0;
 
 stepsize = (max(pval) - min(pval)) / 1000;
-
 for epsilon = min(pval):stepsize:max(pval)
-
+    
     % ====================== YOUR CODE HERE ======================
     % Instructions: Compute the F1 score of choosing epsilon as the
     %               threshold and place the value in F1. The code at the
@@ -37,12 +36,7 @@ for epsilon = min(pval):stepsize:max(pval)
     false_positive = find(error > 0);
 
     fn = length(false_negative);
-    fp = length(false_positive); % instruction pdf has:
-    %fp = sum((pred == 1) & (yval == 0))
-    % so fn would similarily be:
-    %fn = sum((pred == 0) & (yval == 1))
-    % ie 2 lines replaces the above 5 lines using find and length
-    % kinda handy to have the indecies for the fp and fn
+    fp = length(false_positive);
 
     tp = length(find(yval & yval == pred));
 
@@ -54,12 +48,6 @@ for epsilon = min(pval):stepsize:max(pval)
        bestF1 = F1
        bestEpsilon = epsilon
     end
-    
-    % had to take break condition out to get submit successful
-    %if F1 < bestF1 
-    %    break
-    %end
-            
 end
 
 end
